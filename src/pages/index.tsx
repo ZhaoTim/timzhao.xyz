@@ -64,7 +64,6 @@ const Index = ({ latestPosts }: Props) => {
         <section className="flex flex-col-reverse justify-between gap-x-12 sm:flex-row">
           <header>
             <PageTitle>Tim Zhao</PageTitle>
-            <p className="mt-4 text-base">每一个不曾起舞的日子，都是对生命的辜负。</p>
             <p className="mt-4 text-base">你好，我是赵美成。</p>
           </header>
           <div className="flex-shrink-0 overflow-hidden">
