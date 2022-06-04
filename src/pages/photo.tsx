@@ -15,6 +15,12 @@ const Photo = () => {
           <div className="relative aspect-square overflow-hidden rounded-lg ">
             <Image alt="Mountains" src="/assets/night_moto.jpg" layout="fill" objectFit="cover" />
           </div>
+          <div className="relative aspect-square overflow-hidden rounded-lg ">
+            <Image alt="Mountains" src="/assets/changcheng.jpeg" layout="fill" objectFit="cover" />
+          </div>
+          <div className="relative aspect-square overflow-hidden rounded-lg ">
+            <Image alt="Mountains" src="/assets/moto.jpeg" layout="fill" objectFit="cover" />
+          </div>
         </div>
       </Container>
     </Layout>
