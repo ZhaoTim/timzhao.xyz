@@ -4,6 +4,8 @@ import Image, { StaticImageData } from 'next/image';
 import { Container } from '../components/container';
 import summer from '../../public/assets/summer.jpg';
 import nightMoto from '../../public/assets/night_moto.jpg';
+import changcheng from '../../public/assets/changcheng.jpeg';
+import moto from '../../public/assets/moto.jpeg';
 
 const Photo = () => {
   return (
@@ -29,12 +31,18 @@ const Photo = () => {
               objectFit="cover"
             />
           </div>
-          {/* <div className="relative aspect-square overflow-hidden rounded-lg ">
-            <Image alt="Mountains" src="/assets/changcheng.jpeg" layout="fill" objectFit="cover" />
+          <div className="relative aspect-square overflow-hidden rounded-lg ">
+            <Image
+              placeholder="blur"
+              alt="Mountains"
+              src={changcheng}
+              layout="fill"
+              objectFit="cover"
+            />
           </div>
           <div className="relative aspect-square overflow-hidden rounded-lg ">
-            <Image alt="Mountains" src="/assets/moto.jpeg" layout="fill" objectFit="cover" />
-          </div> */}
+            <Image placeholder="blur" alt="Mountains" src={moto} layout="fill" objectFit="cover" />
+          </div>
         </div>
       </Container>
     </Layout>
