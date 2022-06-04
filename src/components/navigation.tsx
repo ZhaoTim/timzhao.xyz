@@ -2,7 +2,14 @@ import React from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { useTheme } from 'next-themes';
-import { ArrowSmLeftIcon, HomeIcon, MoonIcon, SunIcon, UserIcon } from '@heroicons/react/outline';
+import {
+  ArrowSmLeftIcon,
+  HomeIcon,
+  MoonIcon,
+  SunIcon,
+  UserIcon,
+  PhotographIcon,
+} from '@heroicons/react/outline';
 import { Button } from './button';
 
 export const Navigation: React.FC = () => {
@@ -24,6 +31,11 @@ export const Navigation: React.FC = () => {
           <Link href="/">
             <Button data-testid={'back-btn'}>
               <HomeIcon className="h-4 w-4" />
+            </Button>
+          </Link>
+          <Link href="/photo">
+            <Button data-testid={'back-btn'}>
+              <PhotographIcon className="h-4 w-4" />
             </Button>
           </Link>
           <Button
