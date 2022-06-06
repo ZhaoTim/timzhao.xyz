@@ -1,0 +1,46 @@
+---
+title: 题海战术
+tags: ['技术']
+date: '2022-04-03T11:00:00Z'
+description: ''
+author:
+  name: 赵美成
+  picture: '/assets/blog/authors/tim.jpeg'
+---
+
+写一个函数`sum`，它有这样的功能：
+
+```js
+sum(1)(2) == 3; // 1 + 2
+sum(1)(2)(3) == 6; // 1 + 2 + 3
+sum(5)(-1)(2) == 6;
+sum(6)(-1)(-2)(-3) == 0;
+sum(0)(1)(2)(3)(4)(5) == 15;
+```
+
+**solution:**
+
+```js
+function sum(num1) {
+  let result = num1;
+  function wrapper(num2) {
+    result = result + num2;
+    return wrapper;
+  }
+  wrapper.toString = function () {
+    return result;
+  };
+  return wrapper;
+}
+sum(1)(2) == 3; // 1 + 2
+sum(1)(2)(3) == 6; // 1 + 2 + 3
+sum(5)(-1)(2) == 6;
+sum(6)(-1)(-2)(-3) == 0;
+sum(0)(1)(2)(3)(4)(5) == 15;
+```
+
+由给出的测试用例可知，`sum`函数调用后一定会返回一个新的函数(称为`sumReturnValue`)，而这个`sumReturnValue`调用完也会返回一个新的函数，才能有这种无限连续调用的效果。
+
+另一个待解决的问题是使用相等操作符去比较函数和数值类型。按照常识，结果肯定是 false，即函数永远不会等于一个数字，所以我们需要使用一些手段，也就是**改写 toString/valueOf**的默认行为，具体的原因是，对象在和一个基本类型类型进行相等判断时，会调用`toString`或者`valueOf`。
+
+至于数学计算之和，通过在`sum`函数内部定义局部变量`result`存储计算的结果，而`toString`方法就是读取`result`值。
