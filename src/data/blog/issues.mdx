@@ -18,8 +18,6 @@ sum(6)(-1)(-2)(-3) == 0;
 sum(0)(1)(2)(3)(4)(5) == 15;
 ```
 
-**solution:**
-
 ```js
 function sum(num1) {
   let result = num1;
@@ -44,3 +42,91 @@ sum(0)(1)(2)(3)(4)(5) == 15;
 另一个待解决的问题是使用相等操作符去比较函数和数值类型。按照常识，结果肯定是 false，即函数永远不会等于一个数字，所以我们需要使用一些手段，也就是**改写 toString/valueOf**的默认行为，具体的原因是，对象在和一个基本类型类型进行相等判断时，会调用`toString`或者`valueOf`。
 
 至于数学计算之和，通过在`sum`函数内部定义局部变量`result`存储计算的结果，而`toString`方法就是读取`result`值。
+
+---
+
+```js
+const range = {
+  start: 1,
+  end: 10,
+};
+```
+
+存在一个`range`对象，实现：当`100 in range`返回 false，1-10 的数字则返回 true。
+
+```js
+let range = {
+  start: 1,
+  end: 10,
+};
+range = new Proxy(range, {
+  has(target, prop) {
+    return prop >= target.start && prop <= target.end;
+  },
+});
+```
+
+上面代码通过`Proxy`拦截住`in`操作并重新返回逻辑，只有当数字处于 start 和 end 之间才返回 true，其他情况则为 false。
+
+```js
+let obj = {
+  name: 'Tim',
+  _password: '****',
+};
+```
+
+使用 Proxy 实现：对于下划线开头的属性读取、设置、删除、遍历都会报错。
+
+```js
+let obj = {
+  name: 'Tim',
+  _password: '****',
+};
+obj = new Proxy(obj, {
+  get(target, prop) {
+    if (prop.startsWith('_')) {
+      throw new Error('access denied');
+    }
+    return Reflect.get(...arguments);
+  },
+  set(target, prop) {
+    if (prop.startsWith('_')) {
+      throw new Error('access denied');
+    }
+    return Reflect.set(...arguments);
+  },
+  deleteProperty(target, prop) {
+    if (prop.startsWith('_')) {
+      throw new Error('access denied');
+    }
+    return Reflect.deleteProperty(...arguments);
+  },
+  ownKeys(target) {
+    return Object.keys(target).filter((key) => !key.startsWith('_'));
+  },
+});
+```
+
+---
+
+URL 的组成只能由英文字母，一些符号组成，所以如果出现了类似于中文之类的不符合规范的字符，需要进行`编码`。
+
+```js
+const url = new URL('https://www.timzhao.xyz/成');
+console.log(url.toString());
+// 输出： https://www.timzhao.xyz/%E6%88%90
+```
+
+因为`成`是中文，所以必须被编码，编码成其对应的`UTF-8`形式，且在每个字节前加上百分号`%`，这一切
+都是`URL`构造函数帮我们做到的。
+
+如果上面的 URL，需要增加查询参数，恰巧这个参数的值是另一个 URL，不用说，肯定也要经过编码，否则整个 URL 会被破坏掉，类似于`https://www.timzhao.xyz/成?source='https://google.com`，这个 URL 是不合法的。
+
+```js
+const url = new URL('https://www.timzhao.xyz/成');
+url.searchParams.set('source', 'https://google.com');
+console.log(url.toString());
+// https://www.timzhao.xyz/%E6%88%90?source=https%3A%2F%2Fgoogle.com
+```
+
+`url.searchParams.set`方法帮我们把值进行了编码。

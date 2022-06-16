@@ -1,4 +1,4 @@
-export const SiteTitle = 'Bartosz Jarocki - Personal website';
+export const SiteTitle = 'Tim Zhao的博客';
 export const SiteDescription =
   'My personal piece of internet. I write about software development and other things that interests me.';
 export const SiteUrl = process.env.NEXT_PUBLIC_SITE_URL;
